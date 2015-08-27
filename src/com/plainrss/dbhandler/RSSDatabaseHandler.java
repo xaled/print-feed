@@ -4,8 +4,11 @@ package com.plainrss.dbhandler;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.plainrss.model.FeedItem;
-import com.plainrss.model.FeedSource;
+import com.printfeed.model.FeedItem;
+import com.printfeed.model.FeedSource;
+
+import java.sql.*;
+
 
 public class RSSDatabaseHandler  {
 	
@@ -16,6 +19,7 @@ public class RSSDatabaseHandler  {
  
     // Database Name
     private static final String DATABASE_NAME = "RSSmonster_DB";
+    private static final String DATABASE_PATH = "printfeed.db";
  
     // RSSItems table title
     private static final String TABLE_RSSITEMS = "items";
@@ -38,6 +42,15 @@ public class RSSDatabaseHandler  {
  
     public RSSDatabaseHandler() {
         instance = this;
+        Connection c = null;
+        try {
+          Class.forName("org.sqlite.JDBC");
+          c = DriverManager.getConnection("jdbc:sqlite:test.db");
+        } catch ( Exception e ) {
+          System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+          System.exit(0);
+        }
+        System.out.println("Opened database successfully");
     }
     
     public static RSSDatabaseHandler getInstance(){
