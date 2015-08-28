@@ -1,4 +1,4 @@
-package com.plainrss.dbhandler;
+package com.printfeed.main;
 
 
 import java.util.ArrayList;
@@ -18,12 +18,12 @@ public class RSSDatabaseHandler  {
     private static final int DATABASE_VERSION = 1;
  
     // Database Name
-    private static final String DATABASE_NAME = "RSSmonster_DB";
+    private static final String DATABASE_NAME = "PRINTFEED";
     private static final String DATABASE_PATH = "printfeed.db";
  
     // RSSItems table title
-    private static final String TABLE_RSSITEMS = "items";
-    private static final String TABLE_SOURCES = "sources";
+    private static final String TABLE_FEEDITEMS = "items";
+    private static final String TABLE_FEEDSOURCES = "sources";
  
     // RSSItems Table Columns titles
     private static final String KEY_ID = "id";
@@ -39,18 +39,19 @@ public class RSSDatabaseHandler  {
     private static final String KEY_SRC_NAME = "name";
     private static final String KEY_SRC_URL = "sourceURL";
     private static final String KEY_SRC_TAGS = "tags";
- 
+    private Connection connection = null;
     public RSSDatabaseHandler() {
         instance = this;
-        Connection c = null;
+        connection = null;
         try {
           Class.forName("org.sqlite.JDBC");
-          c = DriverManager.getConnection("jdbc:sqlite:test.db");
+          connection = DriverManager.getConnection("jdbc:sqlite:"+DATABASE_PATH);
+          System.out.println("Opened database successfully");
         } catch ( Exception e ) {
           System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-          System.exit(0);
+          
         }
-        System.out.println("Opened database successfully");
+        
     }
     
     public static RSSDatabaseHandler getInstance(){
@@ -58,28 +59,42 @@ public class RSSDatabaseHandler  {
     }
 
     // Creating Tables
-//    @Override
-//    public void onCreate(SQLiteDatabase db) {
-//        String CREATE_RSSITEMS_TABLE = "CREATE TABLE " + TABLE_RSSITEMS + "("
-//                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT,"
-//                + KEY_LINK + " TEXT NOT NULL UNIQUE, " + KEY_DESC + " TEXT, " 
-//                + KEY_SRCID + " INTEGER, " + KEY_SEEN + " INTEGER, " + KEY_DATE + " TEXT " + ")";
-//        String CREATE_SOURCES_TABLE = "CREATE TABLE " + TABLE_SOURCES + "("
-//                + KEY_SRC_ID + " INTEGER PRIMARY KEY," + KEY_SRC_NAME + " TEXT,"
-//                + KEY_SRC_URL + " TEXT NOT NULL UNIQUE, " + KEY_SRC_TAGS + " TEXT " + ")";
-//        db.execSQL(CREATE_RSSITEMS_TABLE);
-//        db.execSQL(CREATE_SOURCES_TABLE);
-//    }
+    public void onCreate() {
+    	
+		try {
+			Statement stmt = connection.createStatement();
+		
+	        String CREATE_FEEDITEMS_TABLE = "CREATE TABLE " + TABLE_FEEDITEMS + "("
+	                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT,"
+	                + KEY_LINK + " TEXT NOT NULL UNIQUE, " + KEY_DESC + " TEXT, " 
+	                + KEY_SRCID + " INTEGER, " + KEY_SEEN + " INTEGER, " + KEY_DATE + " TEXT " + ")";
+	        String CREATE_FEEDSOURCES_TABLE = "CREATE TABLE " + TABLE_FEEDSOURCES + "("
+	                + KEY_SRC_ID + " INTEGER PRIMARY KEY," + KEY_SRC_NAME + " TEXT,"
+	                + KEY_SRC_URL + " TEXT NOT NULL UNIQUE, " + KEY_SRC_TAGS + " TEXT " + ")";
+	
+	        stmt.executeUpdate(CREATE_FEEDITEMS_TABLE);
+	        stmt.execute(CREATE_FEEDSOURCES_TABLE);
+	        stmt.close();
+		} catch (SQLException e) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		}
+    }
  
     // Upgrading database
-//    @Override
-//    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        // Drop older table if existed
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RSSITEMS);
-// 
-//        // Create tables again
-//        onCreate(db);
-//    }
+
+    public void onUpgrade() {
+    	try {
+	        // Drop older table if existed
+	    	Statement stmt = connection.createStatement();
+	    	stmt.executeUpdate("DROP TABLE IF EXISTS " + TABLE_FEEDITEMS);
+	 
+	        // Create tables again
+	        onCreate();
+	        stmt.close();
+    	} catch (SQLException e) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		}
+    }
  
     /**
      * All CRUD(Create, Read, Update, Delete) Operations

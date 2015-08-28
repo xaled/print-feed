@@ -3,7 +3,6 @@ package com.printfeed.main;
 
 import java.util.List;
 
-import com.plainrss.dbhandler.RSSDatabaseHandler;
 import com.printfeed.fetchers.UrlFetcher;
 import com.printfeed.model.FeedItem;
 import com.printfeed.model.FeedSource;
