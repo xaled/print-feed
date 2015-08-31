@@ -25,6 +25,7 @@ public class PrintfeedDatabaseHandler  {
     private static final String TABLE_FEEDITEM = "feeditem";
     private static final String TABLE_FEEDSOURCE = "feedsource";
 
+    private static final String KEY_ID = "id";
     // FeedItem Table Columns titles
     private static final String KEY_TITLE = "title";
     private static final String KEY_LINK = "link";
@@ -113,7 +114,7 @@ public class PrintfeedDatabaseHandler  {
             stmt.setLong(i++,_feeditem.getDate());
             stmt.executeUpdate(sql);
             stmt.close();
-            c.commit();
+            connection.commit();
         } catch (SQLException e) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
@@ -130,7 +131,7 @@ public class PrintfeedDatabaseHandler  {
             stmt.setString(i++,_feedsource.getTags());
             stmt.executeUpdate(sql);
             stmt.close();
-            c.commit();
+            connection.commit();
         } catch (SQLException e) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
@@ -189,12 +190,12 @@ public class PrintfeedDatabaseHandler  {
     // IV.2.2 Getting All
     // Getting All FeedItem
     public List<FeedItem> getAllFeedItems() {
+        ArrayList<FeedItem> list = new ArrayList<FeedItem>();
         try{
 
             String sql = "SELECT * FROM TABLE_FEEDITEM";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            ArrayList<FeedItem> list = newArray List<FeedItem>();
             while( rs.next() ) {
                 FeedItem feeditem_ = new FeedItem();
                 feeditem_.setId(rs.getLong("id"));
@@ -214,12 +215,12 @@ public class PrintfeedDatabaseHandler  {
     }
     // Getting All FeedSource
     public List<FeedSource> getAllFeedSources() {
+        ArrayList<FeedSource> list = new ArrayList<FeedSource>();
         try{
 
             String sql = "SELECT * FROM TABLE_FEEDSOURCE";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            ArrayList<FeedSource> list = new ArrayList<FeedSource>();
             while( rs.next() ) {
                 FeedSource feedsource_ = new FeedSource();
                 feedsource_.setId(rs.getLong("id"));
@@ -287,7 +288,7 @@ public class PrintfeedDatabaseHandler  {
             stmt.setLong(i++,_feeditem.getId());
             stmt.executeUpdate(sql);
             stmt.close();
-            c.commit();
+            connection.commit();
         } catch (SQLException e) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
@@ -305,7 +306,7 @@ public class PrintfeedDatabaseHandler  {
             stmt.setLong(i++,_feedsource.getId());
             stmt.executeUpdate(sql);
             stmt.close();
-            c.commit();
+            connection.commit();
         } catch (SQLException e) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
@@ -323,7 +324,7 @@ public class PrintfeedDatabaseHandler  {
             stmt.setLong(1,_feeditem.getId());
             stmt.executeUpdate(sql);
             stmt.close();
-            c.commit();
+            connection.commit();
         } catch (SQLException e) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
@@ -336,7 +337,7 @@ public class PrintfeedDatabaseHandler  {
             stmt.setLong(1,_feedsource.getId());
             stmt.executeUpdate(sql);
             stmt.close();
-            c.commit();
+            connection.commit();
         } catch (SQLException e) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
