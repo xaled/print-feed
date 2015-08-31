@@ -21,7 +21,7 @@ public class ConsoleMain {
 		List<FeedSource> sources = db.getAllFeedSources();
 		System.out.println("available sources are:");
 		for(FeedSource src:sources){
-			System.out.println("+ " + src.getName() + " : " + src.getSourceURL());
+			System.out.println("+ " + src.getName() + " : " + src.getUrl());
 		}
 		List<FeedItem> items = db.getAllFeedItems();
 		System.out.println("available feeds are:");

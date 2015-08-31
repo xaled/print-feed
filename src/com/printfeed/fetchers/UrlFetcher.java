@@ -16,11 +16,11 @@ public class UrlFetcher {
 		RssFeed feed;
 		ArrayList<FeedItem> itemslist = new ArrayList<FeedItem>();
 		try {
-			feed = rss.load(source.getSourceURL());
+			feed = rss.load(source.getUrl());
 			List<RssItemBean> items = feed.getItems();
 			for (RssItemBean itm : items) {
 				itemslist.add(new FeedItem(itm.getTitle(), itm.getLink(), itm
-						.getDescription(), source.getID(), itm.getPubDate()
+						.getDescription(),(int) source.getId(), itm.getPubDate()
 						.toString()));
 			}
 			return itemslist;
