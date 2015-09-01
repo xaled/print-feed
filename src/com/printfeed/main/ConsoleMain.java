@@ -25,6 +25,9 @@ public class ConsoleMain {
 		}
 		List<FeedItem> items = db.getAllFeedItems();
 		System.out.println("available feeds are:");
+		for(FeedItem item:items){
+			System.out.println(item.getId() + "\t" + item.getSrcId()  +"\t" + item.getTitle() + "\t" + item.getLink());
+		}
 		
 
 	}
