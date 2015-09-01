@@ -77,4 +77,13 @@ public class FeedSource implements Serializable {
 	}
 
 
+
+	@Override
+	public String toString() {
+		return "FeedSource [id=" + id + ", name=" + name + ", url=" + url
+				+ ", tags=" + tags + "]";
+	}
+	
+	
+
 }

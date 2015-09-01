@@ -113,4 +113,14 @@ public class FeedItem implements Serializable {
 	}
 
 
+
+	@Override
+	public String toString() {
+		return "FeedItem [id=" + id + ", title=" + title + ", link=" + link
+				+ ", desc=" + desc + ", srcid=" + srcid + ", seen=" + seen
+				+ ", date=" + date + "]";
+	}
+	
+	
+
 }

@@ -19,9 +19,7 @@ public class UrlFetcher {
 			feed = rss.load(source.getUrl());
 			List<RssItemBean> items = feed.getItems();
 			for (RssItemBean itm : items) {
-				itemslist.add(new FeedItem(itm.getTitle(), itm.getLink(), itm
-						.getDescription(),(int) source.getId(), itm.getPubDate()
-						.toString()));
+				itemslist.add(new FeedItem(itm.getTitle(),itm.getLink(),itm.getDescription(),source.getId(),false,itm.getPubDate().getTime()));
 			}
 			return itemslist;
 
