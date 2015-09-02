@@ -11,7 +11,7 @@ public class ConsoleMain {
 		System.out.println("welcome to plain rss");
 		System.out.println("updating database");
 		
-		RSSDatabaseHandler db =new RSSDatabaseHandler();
+		PrintfeedDatabaseHandler db =new PrintfeedDatabaseHandler();
 		
 		UpdateThread thrd = new UpdateThread(db);
 		thrd.run();//normally start()

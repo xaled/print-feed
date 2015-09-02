@@ -9,7 +9,7 @@ import com.printfeed.model.FeedSource;
 
 
 public class UpdateThread implements Runnable{
-	private RSSDatabaseHandler _db;
+	private PrintfeedDatabaseHandler _db;
 
 	public void run() {
 		
@@ -27,7 +27,7 @@ public class UpdateThread implements Runnable{
 	    
 	};
 
-	public UpdateThread(RSSDatabaseHandler db){
+	public UpdateThread(PrintfeedDatabaseHandler db){
 		this._db = db;
 
 	}
